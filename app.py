@@ -64,13 +64,13 @@ def post_example():
     data = request.get_json()
     return jsonify({"received_message": data})
 
-@app.route('/text_to_speech', methods=['POST'])
+@app.route('/speect_to_text', methods=['POST'])
 def text_to_speech():
-    data = request.get_json()
-    text = data.get('text')
+    
+    text = capture_and_process_command()
     if not text:
         return jsonify({"error": "No text provided"}), 400
-    speak_text(text)
+
     return jsonify({"received_message": text})
 
 # if __name__ == '__main__':
