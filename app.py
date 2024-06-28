@@ -2,13 +2,25 @@ from flask import Flask, request, jsonify
 from dotenv import load_dotenv
 import os
 from flask_cors import CORS
-from text_to_speech import speak_text
+
 
 app = Flask(__name__)
 CORS(app)
 load_dotenv()
 
 app.config['DEBUG'] = os.environ.get('FLASK_DEBUG') == 'True'
+
+
+import pyttsx3
+
+def speak_text(command):
+    engine = pyttsx3.init()
+    voices = engine.getProperty('voices')
+    engine.setProperty('voice', voices[1].id)
+    engine.say(command)
+    engine.runAndWait()
+
+
 
 @app.route('/')
 def home():
