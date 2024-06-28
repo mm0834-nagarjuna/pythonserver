@@ -11,14 +11,47 @@ load_dotenv()
 app.config['DEBUG'] = os.environ.get('FLASK_DEBUG') == 'True'
 
 
-import pyttsx3
+# import pyttsx3
 
-def speak_text(command):
-    engine = pyttsx3.init()
-    voices = engine.getProperty('voices')
-    engine.setProperty('voice', voices[1].id)
-    engine.say(command)
-    engine.runAndWait()
+# def speak_text(command):
+#     engine = pyttsx3.init()
+#     voices = engine.getProperty('voices')
+#     engine.setProperty('voice', voices[1].id)
+#     engine.say(command)
+#     engine.runAndWait()
+
+
+
+import speech_recognition as sr
+
+
+def capture_and_process_command():
+    r = sr.Recognizer()
+    text = ''
+    with sr.Microphone(0) as source2:
+        print("please wait......")
+        r.adjust_for_ambient_noise(source2, duration=0.2)
+        print("Listening for your command. Please speak clearly.")
+
+        try:
+            audio = r.listen(source2, timeout=None, phrase_time_limit=20)  
+            MyText = r.recognize_google(audio)
+            MyText = MyText.lower()
+
+            text = MyText
+        except sr.WaitTimeoutError:
+            return("Listening timed out while waiting for phrase to start")
+            return None
+        except sr.UnknownValueError:
+            return("Google Speech Recognition could not understand the audio")
+            return None
+        except sr.RequestError as e:
+            return(f"Could not request results from Google Speech Recognition service; {e}")
+            return None
+    return text
+
+
+
 
 
 
