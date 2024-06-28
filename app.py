@@ -28,5 +28,5 @@ def text_to_speech():
     speak_text(text)
     return jsonify({"received_message": text})
 
-if __name__ == '__main__':
-    app.run(debug=app.config['DEBUG'])
+# if __name__ == '__main__':
+#     app.run(debug=app.config['DEBUG'])
