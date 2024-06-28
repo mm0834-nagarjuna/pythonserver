@@ -19,5 +19,5 @@ def post_example():
      
     return jsonify({"received_message": data})
 
-if __name__ == '__main__':
-    app.run()
+# if __name__ == '__main__':
+#     app.run()
